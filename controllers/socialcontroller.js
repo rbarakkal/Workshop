@@ -7,35 +7,36 @@ module.exports = {
         console.log("In get details");
         var offset; //offset
         var limit = 10; // limit
-        var page = 1; //page value
-        if (parseInt(req.query.no_paging) == 1) {
-            offset = 0; 
-            dataretrieve(offset, limit, res , req)
+        var page = parseInt(req.query.no_paging);
+        if (page == 1) {
+            offset = 0;
+            dataretrieve(offset, limit, res, page)
         }
-        else if (parseInt(req.query.no_paging) == 2) {
+        else if (page == 2) {
             offset = 10;
-            dataretrieve(offset, limit, res , req)
+            dataretrieve(offset, limit, res, page)
         }
-        else if (parseInt(req.query.no_paging) == 3) {
+        else if (page == 3) {
             offset = 20;
-            dataretrieve(offset, limit, res , req)
+            dataretrieve(offset, limit, res, page)
         }
-        else if (parseInt(req.query.no_paging) == 4) {
+        else if (page == 4) {
             offset = 30;
-            dataretrieve(offset, limit, res , req)
+            dataretrieve(offset, limit, res, page)
         }
-        else if (parseInt(req.query.no_paging) == 5){
+        else if (page == 5){
             offset = 40;
-            dataretrieve(offset, limit, res , req)
+            dataretrieve(offset, limit, res, page)
         }
 
+    },
+    login:function(req,res){
+        return res.status(200).render('customer')
     }
 }
 //====================Helper Function============================
-dataretrieve = function (offset, limit, res, req) {
-    page = req.query.no_paging;
-    console.log(page);
-    user.find({ 
+dataretrieve = function (offset, limit, res ,page) {
+    user.find({
         $and: [
             { 'twitter': false },
             { 'facebook': false },
@@ -50,7 +51,7 @@ dataretrieve = function (offset, limit, res, req) {
                 return res.status(400).json([]);
             }
             else {
-                return res.status(200).render('display', { datas: result, pg: page});
+                return res.status(200).render('display', { datas: result,pg: page });
             }
         }).skip(offset).limit(limit);
 }
